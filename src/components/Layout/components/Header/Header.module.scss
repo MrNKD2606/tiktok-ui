@@ -14,6 +14,7 @@
 .inner {
     height: 100%;
     width: var(--default-layout-width, 1150px);
+    padding: 0 var(--default-layout-horizontal-spacer);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -95,4 +96,40 @@
     &:active {
         background-color: rgba(22, 24, 35, 0.06);
     }
+}
+
+//Action
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.action-btn {
+    color: #161823;
+    padding: 3px 3px 0;
+    height: 3.2rem;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: 16px;
+    .img-btn {
+        width: 2.6rem;
+        height: 2.6rem;
+    }
+}
+
+.more-btn {
+    font-size: 2rem;
+    margin-left: 26px;
+    background-color: transparent;
+    padding: 6px 8px;
+    cursor: pointer;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 24px;
+    cursor: pointer;
 }
