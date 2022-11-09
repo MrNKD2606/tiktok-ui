@@ -1,0 +1,42 @@
+.wrapper {
+    position: relative;
+    padding-top: 16px;
+    padding-left: 8px;
+}
+
+.wrapper::before {
+    position: absolute;
+    content: '';
+    background: rgba(22, 24, 35, 0.12);
+    height: 1px;
+    transform: scaleY(0.5);
+    left: 8px;
+    right: 8px;
+    top: 0;
+}
+
+.links {
+    margin-bottom: 8px;
+}
+.link {
+    color: rgba(22, 24, 35, 0.5);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 17px;
+    display: inline-block;
+    margin-right: 6px;
+    margin-top: 5px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.copy-right {
+    color: rgba(22, 24, 35, 0.5);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 17px;
+    display: inline-block;
+    margin-right: 6px;
+    margin-top: 5px;
+}

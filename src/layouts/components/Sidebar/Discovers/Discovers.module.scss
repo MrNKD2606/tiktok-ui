@@ -1,0 +1,52 @@
+.wrapper {
+    padding: 16px 8px 8px;
+    position: relative;
+}
+
+.wrapper::before {
+    position: absolute;
+    content: '';
+    background: rgba(22, 24, 35, 0.12);
+    height: 1px;
+    transform: scaleY(0.5);
+    left: 8px;
+    right: 8px;
+    top: 0;
+}
+
+.label {
+    color: rgba(22, 24, 35, 0.75);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom: 16px;
+}
+
+.discover {
+}
+
+.discover-item {
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 12px;
+    background: rgb(255, 255, 255);
+    transition: background 200ms ease-in-out 0s;
+    margin-right: 8px;
+    margin-bottom: 12px;
+    padding: 3px 10px;
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+}
+.icon {
+}
+
+.title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: rgba(22, 24, 35, 0.75);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    padding-left: 6px;
+}

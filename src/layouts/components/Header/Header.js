@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faUser, faCoins, faGear, faCamera, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEarthAsia, faCircleQuestion, faKeyboard, faUser, faCoins, faGear, faCamera, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ import styles from './Header.module.scss'
 import images from '~/assets/images';
 import Menu from '~/components/Popper/Menu';
 import Button from '~/components/Button';
-import { InboxIcon, MessageIcon } from '~/components/Icons';
+import { InboxIcon, MessageIcon, MoreIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search/Search';
 import config from '~/config'
@@ -148,7 +148,7 @@ const MENU_ITEMS = [
 
 function Header() {
 
-    const currentUser = true
+    const currentUser = false
 
     //handle logic
     const handleMenuChange = (menuItem) => {
@@ -224,12 +224,13 @@ function Header() {
                         {currentUser ? (
                             <Image
                                 className={cx('user-avatar')}
-                                src="https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/7065963128093147137.jpeg?x-expires=1667365200&x-signature=ki%2FhLXXDCCCTrLbTJuA8NAObojk%3D"
+                                src="https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/7065963128093147137.jpeg?x-expires=1667955600&x-signature=ATBPKOru3KJwhuWfkJAuqgSr%2B0M%3D"
                                 alt='NKD'
                             />
                         ) : (
                             <button className={cx('more-btn')}>
-                                <FontAwesomeIcon icon={faEllipsisVertical} />
+
+                                <MoreIcon className={cx('icon-more')} />
                             </button>
                         )}
                     </Menu>

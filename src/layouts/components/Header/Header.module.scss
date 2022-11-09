@@ -6,20 +6,21 @@
 
     position: fixed;
     top: 0;
-    left: 0;
-    z-index: 10;
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height: var(--default-layout-header-height);
     box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
     background-color: var(--white);
+    z-index: 1000;
 }
 
 .inner {
     height: 100%;
     width: var(--default-layout-width, 1150px);
-    padding: 0 var(--default-layout-horizontal-spacer);
+    padding-right: var(--default-layout-horizontal-spacer);
+    padding-left: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -36,11 +37,14 @@
 }
 
 .more-btn {
-    font-size: 2rem;
-    margin-left: 26px;
+    margin-left: 16px;
+    padding: 0px 4px;
+    height: 20px;
     background-color: transparent;
-    padding: 4px 8px;
     cursor: pointer;
+}
+.icon-more {
+    display: block;
 }
 
 .action-btn {

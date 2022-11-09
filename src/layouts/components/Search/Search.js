@@ -10,7 +10,9 @@ import AccountItem from '~/components/AccountItem';
 import { SearchIcon } from '~/components/Icons/Icons';
 import { useDebounce } from '~/hooks';
 import styles from './Search.module.scss';
+
 const cx = classNames.bind(styles)
+
 function Search() {
 
     const [searchValue, setSearchValue] = useState('')

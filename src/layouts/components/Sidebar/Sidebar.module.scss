@@ -1,0 +1,84 @@
+.scroll-container {
+    width: 356px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    perspective: 1px;
+    transform-style: preserve-3d;
+    perspective-origin: right top;
+    position: fixed;
+    top: 61px;
+    bottom: 0;
+    z-index: 99;
+    padding-right: 0px;
+    background: rgba(255, 255, 255, 1);
+
+    &:hover {
+        transition: opacity 2s ease;
+    }
+
+    &:not(:hover)::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    &.shrink {
+        width: 240px;
+    }
+}
+
+.wrapper {
+    padding: 20px 0 26px 8px;
+}
+
+.sidebar-login {
+    position: relative;
+    padding: 20px 8px 24px 8px;
+}
+
+.sidebar-login::before {
+    position: absolute;
+    content: '';
+    background: rgba(22, 24, 35, 0.12);
+    height: 1px;
+    transform: scaleY(0.5);
+    left: 8px;
+    right: 8px;
+    top: 0;
+}
+
+.p-login {
+    color: rgba(22, 24, 35, 0.5);
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.btn-login {
+    margin-top: 20px;
+    width: 100%;
+}
+.a {
+    position: absolute;
+    padding: 0 4px;
+    top: 0;
+    transform-origin: right top;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+    opacity: 0;
+    right: 0;
+    transform-origin: right top;
+}
+.b {
+    width: 6px;
+    height: 100%;
+    border-radius: 3px;
+    background: rgba(22, 24, 35, 0.06);
+}
