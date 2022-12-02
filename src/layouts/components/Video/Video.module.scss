@@ -95,9 +95,11 @@
 
     &:hover {
         .control-play,
-        .control-volume,
         .control-seekBar,
         .report {
+            opacity: 1;
+        }
+        .control-volume{
             opacity: 1;
         }
     }
@@ -137,6 +139,7 @@
 
     &:hover {
         .container {
+            opacity: 1;
             display: block;
         }
     }
@@ -150,6 +153,7 @@
         cursor: initial;
         background: rgba(22, 24, 35, 0.34);
         border-radius: 32px;
+        opacity: 0;
     }
 
     .volume-icon {

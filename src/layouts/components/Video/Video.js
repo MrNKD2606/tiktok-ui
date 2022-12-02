@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useResolvedPath } from "react-router-dom";
 import Button from "~/components/Button";
 import { CommentIcon, FlagIcon, HeartIcon, MusicIcon, MutedIcon, PauseIcon, PlayIcon, ShareIcon, VolumeIcon } from "~/components/Icons";
 import Image from "~/components/Image";
@@ -9,11 +9,14 @@ import styles from './Video.module.scss'
 
 const cx = classNames.bind(styles)
 
-function Video({ data, mute, volume, adjustVolume, toggleMuted }) {
+function Video({ id, data, mute, volume, onAdjustVolume, onToggleMuted, ontime, onAdjustOntime }) {
 
     const [isPlaying, setIsPlaying] = useState(false)
     const videoRef = useRef()
-
+    const progressRef = useRef()
+    const secondRef = useRef()
+    const [duration, setDuration] = useState('')
+   
     useEffect(() => {
         if (mute) {
             videoRef.current.volume = 0
@@ -21,9 +24,50 @@ function Video({ data, mute, volume, adjustVolume, toggleMuted }) {
             videoRef.current.volume = volume
         }
     })
+
+    // play video đầu tiên
+    useEffect(() => {
+        if(videoRef.current.id == 0) {
+            videoRef.current.onloadedmetadata = function() {
+                setDuration(videoRef.current.duration)
+            }
+            playVideo()
+        }
+    }, [])
+
+    // chuyển video khi scroll
+    useEffect(() => {
+        window.addEventListener('scroll', playVideoInViewport)
+        return () => window.removeEventListener('scroll', playVideoInViewport)
+    })
+
+    // tua
+    useEffect(() => {
+        if(videoRef.current.currentTime !== ontime){
+            if(videoRef.current.currentTime !== 0){
+                const seekTime = ontime * videoRef.current.duration
+                videoRef.current.currentTime = seekTime
+            }
+        }
+    }, [ontime])
+
+    
+
     const playVideo = () => {
         if (isPlaying === false) {
             videoRef.current.play()
+
+            //Tiến độ video thay đổi
+            const duration = Math.floor(videoRef.current.duration)
+            setDuration(duration)
+            videoRef.current.ontimeupdate = function() {
+
+                const du = videoRef.current.duration
+                const time = videoRef.current.currentTime
+                const progressPercent = Math.floor( time / du * 100)
+                progressRef.current.value = progressPercent
+                secondRef.current.innerText = getTime(Math.floor(time))
+            }
             setIsPlaying(true)
         }
     }
@@ -41,6 +85,48 @@ function Video({ data, mute, volume, adjustVolume, toggleMuted }) {
             pauseVideo()
         }
     }
+
+    
+
+    function playVideoInViewport() {
+        var bounding = videoRef.current.getBoundingClientRect()
+        if(bounding.top >= 0 && bounding.left >= 0 
+            && bounding.right <= (window.innerWidth || document.documentElement.clientWidth) 
+            && bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight)){
+                playVideo()
+        } else {
+            pauseVideo()
+        }
+    }
+
+    function getTime(time){
+        let a = 0, b = 0
+        let minute = '', second = ''
+        if(time != 0){
+            if(time < 60){
+                b = Math.floor(time)
+            } else {
+                b = Math.floor(time % 60)
+                a = Math.floor(time / 60)
+            }
+            
+            if(a < 10){
+                minute = `0${a}`
+            } else {
+                minute = `${a}`
+            }
+            if(b < 10){
+                second = `0${b}`
+            } else {
+                second = `${b}`
+            }
+        } else{
+            return `00:00`
+        }
+        return `${minute}:${second}`
+    }
+    
+    
 
     return (
         <div className={cx('wrapper')}>
@@ -72,9 +158,11 @@ function Video({ data, mute, volume, adjustVolume, toggleMuted }) {
                 <div className={cx('video-wrapper')}>
                     <div className={cx('feed-video')}>
                         <video
+                            id={id}
                             loop
                             src={data?.file_url}
-                            ref={videoRef}>
+                            ref={videoRef}
+                        >
                         </video>
 
                         <div className={cx('control-play')}
@@ -83,21 +171,24 @@ function Video({ data, mute, volume, adjustVolume, toggleMuted }) {
                             {isPlaying ? <PauseIcon /> : <PlayIcon />}
                         </div>
 
-                        <div className={cx('control-volume')}>
+                        <div className={cx('control-volume', {active: mute})}>
                             <div className={cx('container')}>
-                                <input type="range" min="0" max="100" step="1" orient="vertical" onChange={adjustVolume} value={volume * 100} />
+                                <input id="volume" type="range" min="0" max="100" step="1" orient="vertical" onChange={onAdjustVolume} value={volume * 100} />
                             </div>
-                            <div className={cx('volume-icon')}>
-                                <VolumeIcon />
+                            <div className={cx('volume-icon')} onClick={onToggleMuted}>
+                                {mute ? <MutedIcon /> : <VolumeIcon />}
                             </div>
-                            {/* <MutedIcon /> */}
+                            
                         </div>
 
                         <div className={cx('control-seekBar')}>
                             <div className={cx('container')}>
-                                <input type="range" min="0" max="100" step="1" orient="vertical" onChange={adjustVolume} value={volume * 100} />
+                                <input
+                                    ref={progressRef}
+                                    onInput={onAdjustOntime}
+                                    id="progress" type="range" min="0" max="100" step="1" orient="vertical"  />
                             </div>
-                            <div className={cx('time')}>01:23/01:26</div>
+                            <div className={cx('time')}><span ref={secondRef}></span>/{getTime(duration)}</div>
                         </div>
 
                         <p className={cx('report')}>
@@ -108,15 +199,15 @@ function Video({ data, mute, volume, adjustVolume, toggleMuted }) {
                     <div className={cx('action')}>
                         <button className={cx('action-btn')}>
                             <span className={cx('action-icon')}><HeartIcon /></span>
-                            <strong className={cx('strong-text')}>333.6k</strong>
+                            <strong className={cx('strong-text')}>{data.likes_count}</strong>
                         </button>
                         <button className={cx('action-btn')}>
                             <span className={cx('action-icon')}><CommentIcon /></span>
-                            <strong className={cx('strong-text')}>333.6k</strong>
+                            <strong className={cx('strong-text')}>{data.comments_count}</strong>
                         </button>
                         <button className={cx('action-btn')}>
                             <span className={cx('action-icon')}><ShareIcon /></span>
-                            <strong className={cx('strong-text')}>333.6k</strong>
+                            <strong className={cx('strong-text')}>{data.shares_count}</strong>
                         </button>
                     </div>
                 </div>
