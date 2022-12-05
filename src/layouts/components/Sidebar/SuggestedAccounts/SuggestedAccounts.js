@@ -4,6 +4,7 @@ import styles from './SuggestedAccounts.module.scss'
 import AccountItem from './AccountItem';
 import { useEffect, useState } from 'react';
 import * as suggestedAccountService from '~/services/suggestedAccountService'
+import config from '~/config';
 
 const cx = classNames.bind(styles)
 

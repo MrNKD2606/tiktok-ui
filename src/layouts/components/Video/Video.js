@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
 import { Link, useResolvedPath } from "react-router-dom";
 import Button from "~/components/Button";
-import { CommentIcon, FlagIcon, HeartIcon, MusicIcon, MutedIcon, PauseIcon, PlayIcon, ShareIcon, VolumeIcon } from "~/components/Icons";
+import { CommentIcon, FlagIcon, HeartIcon, MusicIcon, MutedIcon, PauseIcon, PlayIcon, ShareSolidIcon, VolumeIcon } from "~/components/Icons";
 import Image from "~/components/Image";
 
 import styles from './Video.module.scss'
@@ -130,13 +130,13 @@ function Video({ id, data, mute, volume, onAdjustVolume, onToggleMuted, ontime, 
 
     return (
         <div className={cx('wrapper')}>
-            <Link className={cx('avatar-anchor')}>
+            <Link to={`/@${data.user.nickname}`} className={cx('avatar-anchor')}>
                 <Image className={cx('image')} src={data.user.avatar} alt={data.user.avatar} />
             </Link>
 
             <div className={cx('content')}>
                 <div className={cx('text-info')}>
-                    <Link className={cx('author-container')}>
+                    <Link to={`/@${data.user.nickname}`} className={cx('author-container')}>
                         <h3 className={cx('author-unique')}>{data.user.nickname}</h3>
                         <h4 className={cx('author-nickname')}>{data.user.first_name + ' ' + data.user.last_name}</h4>
                     </Link>
@@ -206,7 +206,7 @@ function Video({ id, data, mute, volume, onAdjustVolume, onToggleMuted, ontime, 
                             <strong className={cx('strong-text')}>{data.comments_count}</strong>
                         </button>
                         <button className={cx('action-btn')}>
-                            <span className={cx('action-icon')}><ShareIcon /></span>
+                            <span className={cx('action-icon')}><ShareSolidIcon /></span>
                             <strong className={cx('strong-text')}>{data.shares_count}</strong>
                         </button>
                     </div>
